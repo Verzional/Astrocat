@@ -10,13 +10,19 @@ import GameplayKit
 
 class MoveComponent: GKComponent {
     let speed: CGFloat = 100
+    let jumpSpeed: CGFloat = 50
+    var direction: CGFloat = 0
+    
+    func jump() {
+        guard let node = entity?.component(ofType: GKSKNodeComponent.self)?.node else { return }
+        node.physicsBody?.applyImpulse(CGVector(dx: 0, dy: jumpSpeed))
+    }
     
     override func update(deltaTime seconds: TimeInterval) {
         super.update(deltaTime: seconds)
         
-        guard let nodeComponent = entity?.component(ofType: GKSKNodeComponent.self) else { return }
-        let node = nodeComponent.node
+        guard let node = entity?.component(ofType: GKSKNodeComponent.self)?.node else { return }
         
-        node.position.x += speed * CGFloat(seconds)
+        node.position.x += direction * speed * CGFloat(seconds)
     }
 }
