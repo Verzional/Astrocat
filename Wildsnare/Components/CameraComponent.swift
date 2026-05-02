@@ -22,8 +22,8 @@ class CameraComponent: GKComponent {
         
         guard let target = target else { return }
         
-        cameraNode.position.x += (target.position.x - cameraNode.position.x) * 0.1
-        cameraNode.position.y += (target.position.y - cameraNode.position.y) * 0.1
+        cameraNode.position.x += (target.position.x - cameraNode.position.x)
+        cameraNode.position.y += (target.position.y - cameraNode.position.y)
     }
     
     required init?(coder: NSCoder) {

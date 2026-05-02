@@ -20,18 +20,24 @@ class MoveComponent: GKComponent {
             return
         }
         
+        // Handle Horizontal Movement
         let direction = input.joystickDirection
-        
         node.physicsBody?.velocity.dx = direction * speed
         
-        if input.wantsToJump && abs(node.physicsBody?.velocity.dy ?? 0) < 0.1 {
-            node.physicsBody?.applyImpulse(CGVector(dx: 0, dy: jumpImpulse))
-        }
-        
+        // Handle Facing Direction
         if direction > 0 {
             node.xScale = abs(node.xScale)
         } else if direction < 0 {
             node.xScale = -abs(node.xScale)
+        }
+        
+        // Handle Jump
+        if input.wantsToJump {
+            if abs(node.physicsBody?.velocity.dy ?? 0) < 0.1 {
+                node.physicsBody?.applyImpulse(CGVector(dx: 0, dy: jumpImpulse))
+            }
+            
+            input.wantsToJump = false
         }
     }
 }
