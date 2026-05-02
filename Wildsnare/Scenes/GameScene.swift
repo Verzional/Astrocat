@@ -13,6 +13,9 @@ class GameScene: SKScene {
     var graphs = [String : GKGraph]()
     private var lastUpdateTime: TimeInterval = 0
     
+    var moveSystem = GKComponentSystem(componentClass: MoveComponent.self)
+    var cameraSystem = GKComponentSystem(componentClass: CameraComponent.self)
+    
     // UI Constants & Nodes
     private let joystickRadius: CGFloat = 100
     private var joystickBase: SKShapeNode?
@@ -182,7 +185,7 @@ class GameScene: SKScene {
         let dt = currentTime - lastUpdateTime
         
         for entity in entities {
-            entity.update(deltaTime: dt) //
+            entity.update(deltaTime: dt) 
         }
         lastUpdateTime = currentTime
     }

@@ -11,22 +11,22 @@ import SpriteKit
 class MoveComponent: GKComponent {
     let speed: CGFloat = 200
     let jumpImpulse: CGFloat = 100
-    var direction: CGFloat = 0
-    
-    func jump() {
-        guard let node = entity?.component(ofType: GKSKNodeComponent.self)?.node else { return }
-        
-        if abs(node.physicsBody?.velocity.dy ?? 0) < 0.1 {
-            node.physicsBody?.applyImpulse(CGVector(dx: 0, dy: jumpImpulse))
-        }
-    }
     
     override func update(deltaTime seconds: TimeInterval) {
         super.update(deltaTime: seconds)
         
-        guard let node = entity?.component(ofType: GKSKNodeComponent.self)?.node else { return }
+        guard let node = entity?.component(ofType: GKSKNodeComponent.self)?.node,
+              let input = entity?.component(ofType: InputComponent.self) else {
+            return
+        }
         
-        node.position.x += direction * speed * CGFloat(seconds)
+        let direction = input.joystickDirection
+        
+        node.physicsBody?.velocity.dx = direction * speed
+        
+        if input.wantsToJump && abs(node.physicsBody?.velocity.dy ?? 0) < 0.1 {
+            node.physicsBody?.applyImpulse(CGVector(dx: 0, dy: jumpImpulse))
+        }
         
         if direction > 0 {
             node.xScale = abs(node.xScale)
