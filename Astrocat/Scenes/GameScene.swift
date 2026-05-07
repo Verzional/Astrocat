@@ -1,6 +1,6 @@
 //
 //  GameScene.swift
-//  Wildsnare
+//  Astrocat
 //
 //  Created by Valentino Manuel Gunawan on 30/04/26.
 //

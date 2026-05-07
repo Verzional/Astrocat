@@ -1,6 +1,6 @@
 //
 //  CameraComponent.swift
-//  Wildsnare
+//  Astrocat
 //
 //  Created by Valentino Manuel Gunawan on 01/05/26.
 //
