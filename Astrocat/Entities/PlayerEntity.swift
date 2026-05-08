@@ -17,8 +17,8 @@ class PlayerEntity: GKEntity {
         let visualComponent = GKSKNodeComponent(node: node)
         addComponent(visualComponent)
         
-        let InputComponent = InputComponent()
-        addComponent(InputComponent)
+        let inputComponent = InputComponent()
+        addComponent(inputComponent)
         
         let moveComponent = MoveComponent()
         addComponent(moveComponent)

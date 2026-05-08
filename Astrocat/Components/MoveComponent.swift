@@ -6,7 +6,6 @@
 //
 
 import GameplayKit
-import SpriteKit
 
 class MoveComponent: GKComponent {
     let speed: CGFloat = 200
