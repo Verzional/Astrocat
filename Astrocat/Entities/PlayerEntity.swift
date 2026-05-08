@@ -26,6 +26,9 @@ class PlayerEntity: GKEntity {
         let cameraComponent = CameraComponent(camera: camera)
         cameraComponent.target = node
         addComponent(cameraComponent)
+        
+        let statusComponent = StatusComponent()
+        addComponent(statusComponent)
     }
     
     required init?(coder aDecoder: NSCoder) {
