@@ -23,6 +23,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // Trap Systems
     var blackHoleSystem = GKComponentSystem(componentClass: BlackHoleSystem.self)
+    var electricCoilSystem = GKComponentSystem(componentClass: ElectricCoilSystem.self)
     
     var playerInput: InputComponent? {
         return player?.component(ofType: InputComponent.self)
@@ -70,6 +71,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 self.blackHoleSystem.addComponent(foundIn: trapEntity)
             }
         }
+        enumerateChildNodes(withName: "//ElectricCoil") { node, _ in
+            if let sprite = node as? SKSpriteNode {
+                let trapEntity = TrapEntity(node: sprite, type: .electricCoil)
+                
+                self.entities.append(trapEntity)
+                
+                self.electricCoilSystem.addComponent(foundIn: trapEntity)
+            }
+        }
     }
     
     private func setupPlayer() {
@@ -104,5 +114,30 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         cameraSystem.update(deltaTime: dt)
         
         lastUpdateTime = currentTime
+    }
+}
+
+extension GameScene {
+    func didBegin(_ contact: SKPhysicsContact) {
+        let contactMask = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
+        
+        if contactMask == (PhysicsCategory.player | PhysicsCategory.trap) {
+            let playerNode = (contact.bodyA.categoryBitMask == PhysicsCategory.player) ? contact.bodyA.node : contact.bodyB.node
+            let trapNode = (contact.bodyA.categoryBitMask == PhysicsCategory.trap) ? contact.bodyA.node : contact.bodyB.node
+            
+            handleContact(playerNode: playerNode, trapNode: trapNode)
+        }
+    }
+    
+    private func handleContact(playerNode: SKNode?, trapNode: SKNode?) {
+        guard let playerEntity = playerNode?.entity as? PlayerEntity,
+              let trapEntity = trapNode?.entity as? TrapEntity else
+        { return }
+        
+        for component in trapEntity.components {
+            if let interactionHandler = component as? TrapProtocol {
+                interactionHandler.didContact(player: playerEntity)
+            }
+        }
     }
 }

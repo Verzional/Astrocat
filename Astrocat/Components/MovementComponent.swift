@@ -9,5 +9,5 @@ import GameplayKit
 
 class MovementComponent: GKComponent {
     var speed: CGFloat = 300.0
-    var impulse: CGFloat = 150.0
+    var impulse: CGFloat = 100.0
 }

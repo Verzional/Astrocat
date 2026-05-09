@@ -16,7 +16,7 @@ class JumpingState: GKState {
     }
     
     override func isValidNextState(_ stateClass: AnyClass) -> Bool {
-        return stateClass == IdleState.self
+        return stateClass == IdleState.self || stateClass == StunnedState.self
     }
     
     override func didEnter(from previousState: GKState?) {
