@@ -29,16 +29,8 @@ class TrapEntity: GKEntity {
         let visualComponent = GKSKNodeComponent(node: node)
         addComponent(visualComponent)
         
-        setupPhysics(for: node)
-        
         let trapComponent = TrapComponent(type: type)
         addComponent(trapComponent)
-    }
-    
-    private func setupPhysics(for node: SKSpriteNode) {
-        if node.physicsBody == nil {
-            node.physicsBody = SKPhysicsBody(rectangleOf: node.size)
-        }
     }
     
     required init?(coder aDecoder: NSCoder) {

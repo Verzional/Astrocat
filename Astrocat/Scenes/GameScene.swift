@@ -18,19 +18,13 @@ class GameScene: SKScene {
     var player: PlayerEntity?
     var moveSystem = GKComponentSystem(componentClass: MoveComponent.self)
     var cameraSystem = GKComponentSystem(componentClass: CameraComponent.self)
+    var trapSystem = GKComponentSystem(componentClass: TrapComponent.self)
     
     var playerInput: InputComponent? {
         return player?.component(ofType: InputComponent.self)
     }
     
     // MARK: - Setup
-    
-    override func didMove(to view: SKView) {
-        super.didMove(to: view)
-        setupCamera()
-        setupPlayer()
-        setupUI()
-    }
     
     private func setupCamera() {
         addChild(mainCamera)
@@ -44,6 +38,16 @@ class GameScene: SKScene {
             
             moveSystem.addComponent(foundIn: playerEntity)
             cameraSystem.addComponent(foundIn: playerEntity)
+        }
+    }
+    
+    private func setupTraps() {
+        enumerateChildNodes(withName: "//BlackHole") { node, _ in
+            if let sprite = node as? SKSpriteNode {
+                let trapEntity = TrapEntity(node: sprite, type: .blackHole)
+                self.entities.append(trapEntity)
+                self.trapSystem.addComponent(foundIn: trapEntity)
+            }
         }
     }
     
@@ -72,6 +76,14 @@ class GameScene: SKScene {
         mainCamera.addChild(jumpButton)
     }
     
+    override func didMove(to view: SKView) {
+        super.didMove(to: view)
+        setupCamera()
+        setupPlayer()
+        setupTraps()
+        setupUI()
+    }
+    
     // MARK: - Update
     
     override func update(_ currentTime: TimeInterval) {
@@ -79,6 +91,7 @@ class GameScene: SKScene {
         let dt = currentTime - lastUpdateTime
         
         moveSystem.update(deltaTime: dt)
+        trapSystem.update(deltaTime: dt)
         cameraSystem.update(deltaTime: dt)
         
         lastUpdateTime = currentTime
