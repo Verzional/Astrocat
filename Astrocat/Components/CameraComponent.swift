@@ -11,19 +11,11 @@ import SpriteKit
 class CameraComponent: GKComponent {
     let cameraNode: SKCameraNode
     var target: SKNode?
-    
+    var lerpFactor: CGFloat = 0.1
+
     init(camera: SKCameraNode) {
         self.cameraNode = camera
         super.init()
-    }
-    
-    override func update(deltaTime seconds: TimeInterval) {
-        super.update(deltaTime: seconds)
-        
-        guard let target = target else { return }
-        
-        cameraNode.position.x += (target.position.x - cameraNode.position.x)
-        cameraNode.position.y += (target.position.y - cameraNode.position.y)
     }
     
     required init?(coder: NSCoder) {

@@ -8,7 +8,7 @@
 import SpriteKit
 import GameplayKit
 
-class GameScene: SKScene {
+class GameScene: SKScene, SKPhysicsContactDelegate {
     var entities = [GKEntity]()
     var graphs = [String : GKGraph]()
     
@@ -18,7 +18,7 @@ class GameScene: SKScene {
     // Player Systems
     var player: PlayerEntity?
     var movementSystem = GKComponentSystem(componentClass: MovementSystem.self)
-    var cameraSystem = GKComponentSystem(componentClass: CameraComponent.self)
+    var cameraSystem = GKComponentSystem(componentClass: CameraSystem.self)
     var stateSystem = GKComponentSystem(componentClass: StateComponent.self)
     
     // Trap Systems
@@ -98,10 +98,10 @@ class GameScene: SKScene {
         if lastUpdateTime == 0 { lastUpdateTime = currentTime }
         let dt = currentTime - lastUpdateTime
         
-        movementSystem.update(deltaTime: dt)
         stateSystem.update(deltaTime: dt)
-        cameraSystem.update(deltaTime: dt)
         blackHoleSystem.update(deltaTime: dt)
+        movementSystem.update(deltaTime: dt)
+        cameraSystem.update(deltaTime: dt)
         
         lastUpdateTime = currentTime
     }

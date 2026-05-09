@@ -16,9 +16,16 @@ class PlayerEntity: GKEntity {
         node.texture?.filteringMode = .nearest
         addComponent(GKSKNodeComponent(node: node))
         
-        // Data
+        // Movement
         addComponent(InputComponent())
         addComponent(MovementComponent())
+        addComponent(MovementSystem())
+        
+        // Camera
+        let cameraComponent = CameraComponent(camera: camera)
+        cameraComponent.target = node
+        addComponent(cameraComponent)
+        addComponent(CameraSystem())
         
         // States
         let states = [
@@ -27,14 +34,6 @@ class PlayerEntity: GKEntity {
             StunnedState(entity: self)
         ]
         addComponent(StateComponent(states: states))
-        
-        // Camera
-        let cameraComponent = CameraComponent(camera: camera)
-        cameraComponent.target = node
-        addComponent(cameraComponent)
-        
-        // Systems
-        addComponent(MovementSystem())
         
         // Physics
         if let body = node.physicsBody {
