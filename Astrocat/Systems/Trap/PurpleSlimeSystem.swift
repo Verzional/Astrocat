@@ -13,9 +13,20 @@ class PurpleSlimeSystem: GKComponent, TrapProtocol {
               trapData.type == .purpleSlime
         else { return }
         
-        if let status = player.component(ofType: StatusComponent.self) {
-            status.slowTimer = trapData.effectDuration
-            status.slowModifier = trapData.speedMofidier
+        if let stateComp = player.component(ofType: StatusComponent.self) {
+            if stateComp.stateMachine.currentState is SlowedDownState {
+                if let slowedDown = stateComp.stateMachine.currentState as? SlowedDownState {
+                    slowedDown.elapsed = 0
+                }
+                return
+            }
+            
+            if let slowedDown = stateComp.stateMachine.state(forClass: SlowedDownState.self) {
+                slowedDown.duration = trapData.effectDuration
+                slowedDown.modifier = trapData.speedMofidier
+            }
+            
+            stateComp.stateMachine.enter(SlowedDownState.self)
         }
     }
 }

@@ -1,5 +1,5 @@
 //
-//  StatusComponent.swift
+//  StateComponent.swift
 //  Astrocat
 //
 //  Created by Valentino Manuel Gunawan on 09/05/26.
@@ -7,16 +7,15 @@
 
 import GameplayKit
 
-class StatusComponent: GKComponent {
+class LocomotionComponent: GKComponent {
     var stateMachine: GKStateMachine!
     
     override init() {
         super.init()
         
         let states = [
-            NormalState(component: self),
-            SlowedDownState(component: self),
-            StunnedState(component: self)
+            IdleState(component: self),
+            JumpingState(component: self)
         ]
         
         self.stateMachine = GKStateMachine(states: states)

@@ -7,6 +7,15 @@
 
 import GameplayKit
 
-class ForceFieldSystem: GKComponent {
-    
+class ForceFieldSystem: GKComponent, TrapProtocol {
+    func didContact(player: PlayerEntity) {
+        guard let trapData = entity?.component(ofType: TrapComponent.self),
+              trapData.type == .forceField
+        else { return }
+        
+        if let status = player.component(ofType: StatusComponent.self) {
+//            status.impulseForce = trapData.impulseForce
+//            status.status = .repelled
+        }
+    }
 }

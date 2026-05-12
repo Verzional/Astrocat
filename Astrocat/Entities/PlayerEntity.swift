@@ -21,10 +21,6 @@ class PlayerEntity: GKEntity {
         addComponent(MovementComponent())
         addComponent(MovementSystem())
         
-        // Status
-        addComponent(StatusComponent())
-        addComponent(StatusSystem())
-        
         // Camera
         let cameraComponent = CameraComponent(camera: camera)
         cameraComponent.target = node
@@ -32,12 +28,8 @@ class PlayerEntity: GKEntity {
         addComponent(CameraSystem())
         
         // States
-        let states = [
-            IdleState(entity: self),
-            JumpingState(entity: self),
-            StunnedState(entity: self),
-        ]
-        addComponent(StateComponent(states: states))
+        addComponent(LocomotionComponent())
+        addComponent(StatusComponent())
         addComponent(StateSystem())
         
         // Physics

@@ -9,8 +9,11 @@ import GameplayKit
 
 class StateSystem: GKComponent {
     override func update(deltaTime seconds: TimeInterval) {
-        guard let stateData = entity?.component(ofType: StateComponent.self) else { return }
+        guard let locomotion = entity?.component(ofType: LocomotionComponent.self),
+              let status = entity?.component(ofType: StatusComponent.self)
+        else{ return }
         
-        stateData.stateMachine.update(deltaTime: seconds)
+        locomotion.stateMachine.update(deltaTime: seconds)
+        status.stateMachine.update(deltaTime: seconds)
     }
 }

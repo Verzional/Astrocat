@@ -8,15 +8,15 @@
 import GameplayKit
 
 class IdleState: GKState {
-    weak var entity: GKEntity?
+    unowned let locomotionComponent: LocomotionComponent
     
-    init(entity: GKEntity) {
-        self.entity = entity
+    init(component: LocomotionComponent) {
+        self.locomotionComponent = component
         super.init()
     }
     
     override func isValidNextState(_ stateClass: AnyClass) -> Bool {
-        return stateClass == JumpingState.self || stateClass == StunnedState.self
+        return stateClass == JumpingState.self
     }
     
     override func didEnter(from previousState: GKState?) {

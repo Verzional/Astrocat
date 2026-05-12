@@ -13,7 +13,7 @@ class ElectricCoilSystem: GKComponent, TrapProtocol {
               trapData.type == .electricCoil
         else { return }
         
-        if let stateComp = player.component(ofType: StateComponent.self) {
+        if let stateComp = player.component(ofType: StatusComponent.self) {
             if let stunned = stateComp.stateMachine.state(forClass: StunnedState.self) {
                 stunned.duration = trapData.effectDuration
             }

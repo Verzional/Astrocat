@@ -13,25 +13,28 @@ class MovementSystem: GKComponent {
         guard let node = entity?.component(ofType: GKSKNodeComponent.self)?.node,
               let input = entity?.component(ofType: InputComponent.self),
               let moveData = entity?.component(ofType: MovementComponent.self),
-              let stateComp = entity?.component(ofType: StateComponent.self),
+              let locomotion = entity?.component(ofType: LocomotionComponent.self),
               let status = entity?.component(ofType: StatusComponent.self)
         else { return }
         
+        // Local Variable for Dynamic Speed Manipulation
         var currentSpeed = moveData.speed
         var currentImpulse = moveData.impulse
         
+        // Handle Slowed Down Status
+        if status.stateMachine.currentState is SlowedDownState {
+            currentSpeed *= 0.5
+            currentImpulse *= 0.5
+        }
+        
         // Handle Stunned State
-        if stateComp.stateMachine.currentState is StunnedState {
+        if status.stateMachine.currentState is StunnedState {
             node.physicsBody?.velocity.dx = 0
             return
         }
         
-        // Handle Slowed Down State
-        if status.slowTimer > 0 {
-            currentSpeed *= status.slowModifier
-            currentImpulse *= status.slowModifier
-        }
-        
+        // Handle Repelled Status
+
         // Handle Movement Input
         let direction = input.joystickDirection
         node.physicsBody?.velocity.dx = direction * currentSpeed
@@ -42,8 +45,8 @@ class MovementSystem: GKComponent {
         }
         
         // Handle Jump
-        if input.wantsToJump && !(stateComp.stateMachine.currentState is JumpingState) {
-            stateComp.stateMachine.enter(JumpingState.self)
+        if input.wantsToJump && !(locomotion.stateMachine.currentState is JumpingState) {
+            locomotion.stateMachine.enter(JumpingState.self)
             
             node.physicsBody?.applyImpulse(CGVector(dx: 0, dy: currentImpulse))
             

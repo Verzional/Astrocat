@@ -8,25 +8,25 @@
 import GameplayKit
 
 class StunnedState: GKState {
-    weak var entity: GKEntity?
-    var duration: TimeInterval = 0.0
+    unowned let statusComp: StatusComponent
     var elapsed: TimeInterval = 0.0
+    var duration: TimeInterval = 0.0
     
-    init(entity: GKEntity) {
-        self.entity = entity
+    init(component: StatusComponent) {
+        self.statusComp = component
         super.init()
     }
     
     override func didEnter(from previousState: GKState?) {
         elapsed = 0
-        print("Stunned Animation Started")
+        print("Start Stunned Animation")
     }
     
     override func update(deltaTime seconds: TimeInterval) {
         elapsed += seconds
         
         if elapsed >= duration {
-            self.stateMachine?.enter(IdleState.self)
+            self.stateMachine?.enter(NormalState.self)
         }
     }
 }

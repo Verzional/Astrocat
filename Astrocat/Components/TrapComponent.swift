@@ -16,7 +16,7 @@ class TrapComponent: GKComponent {
     // Black Hole & Force Field
     var radius: CGFloat = 150.0
     var pullForce: CGFloat = 1000.0
-    var impulseForce: CGFloat = 200.0
+    var impulseForce: CGFloat = 100.0
     
     // Purple Slime
     var speedMofidier: CGFloat = 0.5

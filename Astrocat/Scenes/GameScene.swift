@@ -20,12 +20,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var movementSystem = GKComponentSystem(componentClass: MovementSystem.self)
     var cameraSystem = GKComponentSystem(componentClass: CameraSystem.self)
     var stateSystem = GKComponentSystem(componentClass: StateSystem.self)
-    var statusSystem = GKComponentSystem(componentClass: StatusSystem.self)
     
     // Trap Systems
     var blackHoleSystem = GKComponentSystem(componentClass: BlackHoleSystem.self)
     var electricCoilSystem = GKComponentSystem(componentClass: ElectricCoilSystem.self)
     var purpleSlimeSystem = GKComponentSystem(componentClass: PurpleSlimeSystem.self)
+    var forceFieldSystem = GKComponentSystem(componentClass: ForceFieldSystem.self)
     
     var playerInput: InputComponent? {
         return player?.component(ofType: InputComponent.self)
@@ -101,6 +101,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 self.purpleSlimeSystem.addComponent(foundIn: trapEntity)
             }
         }
+        enumerateChildNodes(withName: "//ForceField") { node, _ in
+            if let sprite = node as? SKSpriteNode {
+                let trapEntity = TrapEntity(node: sprite, type: .forceField)
+                
+                self.entities.append(trapEntity)
+                
+                self.forceFieldSystem.addComponent(foundIn: trapEntity)
+            }
+        }
     }
     
     private func setupPlayer() {
@@ -111,7 +120,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             movementSystem.addComponent(foundIn: playerEntity)
             cameraSystem.addComponent(foundIn: playerEntity)
             stateSystem.addComponent(foundIn: playerEntity)
-            statusSystem.addComponent(foundIn: playerEntity)
         }
     }
     
@@ -134,7 +142,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         movementSystem.update(deltaTime: dt)
         cameraSystem.update(deltaTime: dt)
         stateSystem.update(deltaTime: dt)
-        statusSystem.update(deltaTime: dt)
         
         lastUpdateTime = currentTime
     }
