@@ -50,7 +50,9 @@ class GameViewController: UIViewController {
     }
     
     override func loadView() {
-        self.view = SKView()
+        let skView = SKView()
+        skView.isMultipleTouchEnabled = true
+        self.view = skView
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
