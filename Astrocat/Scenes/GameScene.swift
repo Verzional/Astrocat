@@ -20,6 +20,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     private var generatedLevel: GeneratedLevel?
     private var previousPlayerBottomY: CGFloat?
     
+    var levelSeed: UInt64?
+    
     // Debug
     private let showDebugGrid = false
     
@@ -278,7 +280,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     private func setupLevel() {
-        let seed = UInt64(Date().timeIntervalSince1970)
+        let seed = levelSeed ?? UInt64(Date().timeIntervalSince1970)
 
         let generator = LevelGenerator(
             config: levelConfig,

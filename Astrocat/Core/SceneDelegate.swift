@@ -36,6 +36,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let gameVC = GameViewController()
             gameVC.matchSystem = self?.matchSystem
             gameVC.modalPresentationStyle = .fullScreen
+            gameVC.levelSeed = self.matchSystem.randomSeed
             hostingVC?.present(gameVC, animated: true)
         }
         

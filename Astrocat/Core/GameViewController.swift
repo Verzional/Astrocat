@@ -13,6 +13,7 @@ import GameplayKit
 class GameViewController: UIViewController {
     
     var matchSystem: MatchSystem?
+    var levelSeed: UInt64?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,6 +37,7 @@ class GameViewController: UIViewController {
                     resultsVC.modalPresentationStyle = .fullScreen
                     self?.present(resultsVC, animated: true)
                 }
+                sceneNode.levelSeed = levelSeed
                 
                 if let view = self.view as! SKView? {
                     view.presentScene(sceneNode)
