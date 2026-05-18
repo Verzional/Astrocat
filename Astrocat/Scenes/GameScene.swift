@@ -40,6 +40,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var electricCoilSystem = GKComponentSystem(componentClass: ElectricCoilSystem.self)
     var purpleSlimeSystem = GKComponentSystem(componentClass: PurpleSlimeSystem.self)
     var forceFieldSystem = GKComponentSystem(componentClass: ForceFieldSystem.self)
+    var cometDustSystem = GKComponentSystem(componentClass: CometDustSystem.self)
     
     // Multiplayer Systems
     var remotePlayers: [String: RemotePlayerEntity] = [:]
@@ -386,9 +387,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(gridNode)
     }
     
+    private func removeSksTestArea() {
+        childNode(withName: "//TestArea")?.removeFromParent()
+    }
+    
     override func didMove(to view: SKView) {
         super.didMove(to: view)
         self.physicsWorld.contactDelegate = self
+        removeSksTestArea()
         setupCamera()
         setupBackground()
         setupFloor()
