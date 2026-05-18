@@ -31,6 +31,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // Multiplayer Systems
     var remotePlayers: [String: RemotePlayerEntity] = [:]
     var matchSystem: MatchSystem?
+    var onGameFinished: (([RaceResult]) -> Void)? 
     
     private func setupMultiplayer() {
         guard let matchSystem = matchSystem else { return }
@@ -45,12 +46,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 let remoteEntity = RemotePlayerEntity(scene: self)
                 self.remotePlayers[id] = remoteEntity
             }
-            self.remotePlayers[id]?.updatePosition(x: x, y: y)
+            let dx = message.playerDX ?? 0
+            self.remotePlayers[id]?.updatePosition(x: x, y: y, dx: dx)
+
         }
         
         matchSystem.onPlayerDisconnected = { [weak self] id in
             self?.remotePlayers[id]?.removeFromScene()
             self?.remotePlayers.removeValue(forKey: id)
+        }
+        
+        matchSystem.onFinalResultsReceived = { [weak self] results in
+            guard let self = self else { return }
+            self.isPaused = true
+            self.onGameFinished?(results)
         }
     }
     
