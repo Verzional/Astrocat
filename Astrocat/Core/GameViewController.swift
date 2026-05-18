@@ -15,6 +15,8 @@ class GameViewController: UIViewController {
     var matchSystem: MatchSystem?
     var levelSeed: UInt64?
     
+    
+    var matchSystem: MatchSystem?
     override func viewDidLoad() {
         super.viewDidLoad()
         

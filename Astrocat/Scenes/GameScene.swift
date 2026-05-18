@@ -45,7 +45,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // Multiplayer Systems
     var remotePlayers: [String: RemotePlayerEntity] = [:]
     var matchSystem: MatchSystem?
+<<<<<<< HEAD
     var onGameFinished: (([RaceResult]) -> Void)?
+=======
+>>>>>>> df54f51 (feat: implement multiplayer functionality with remote player management and disconnection handling)
     
     private func setupMultiplayer() {
         guard let matchSystem = matchSystem else { return }
@@ -472,6 +475,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         setupPlayer()
         setupMultiplayer()
         setupUI()
+        setupMultiplayer()
     }
     
     // MARK: - Update
