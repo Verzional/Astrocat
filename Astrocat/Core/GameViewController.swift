@@ -17,6 +17,7 @@ class GameViewController: UIViewController {
     
     
     var matchSystem: MatchSystem?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -40,6 +41,7 @@ class GameViewController: UIViewController {
                     self?.present(resultsVC, animated: true)
                 }
                 sceneNode.levelSeed = levelSeed
+                sceneNode.matchSystem = matchSystem
                 
                 if let view = self.view as! SKView? {
                     view.presentScene(sceneNode)
