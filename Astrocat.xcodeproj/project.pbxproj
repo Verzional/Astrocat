@@ -146,7 +146,7 @@
 				CODE_SIGN_ENTITLEMENTS = Astrocat/Astrocat.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = Y335V6WGLV;
+				DEVELOPMENT_TEAM = H853SK7458;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Astrocat/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Astrocat;
@@ -181,7 +181,7 @@
 				CODE_SIGN_ENTITLEMENTS = Astrocat/Astrocat.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = Y335V6WGLV;
+				DEVELOPMENT_TEAM = H853SK7458;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Astrocat/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Astrocat;
